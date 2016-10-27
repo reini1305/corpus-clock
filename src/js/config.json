@@ -18,6 +18,22 @@
             "defaultValue": "Settings"
             },
             {
+              "type": "color",
+              "messageKey": "color",
+              "defaultValue": "55AAFF",
+              "label": "Hands Color",
+              "sunlight": true,
+              "capabilities": ["COLOR"]
+            },
+            {
+              "type": "color",
+              "messageKey": "bgcolor",
+              "defaultValue": "000000",
+              "label": "Background Color",
+              "sunlight": true,
+              "capabilities": ["COLOR"]
+            },
+            {
               "type": "slider",
               "messageKey": "animationSec",
               "defaultValue": 1,

@@ -60,9 +60,10 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   GPoint pos_inner, pos_outer;
 
   // clear background
+  graphics_context_set_fill_color(ctx,PBL_IF_COLOR_ELSE(enamel_get_bgcolor(),GColorBlack));
   graphics_fill_rect(ctx,bounds,0,GCornerNone);
 
-  graphics_context_set_stroke_color(ctx,GColorPictonBlue);
+  graphics_context_set_stroke_color(ctx,PBL_IF_COLOR_ELSE(enamel_get_color(),GColorWhite));
   graphics_context_set_stroke_width(ctx,4);
 
   // draw second
