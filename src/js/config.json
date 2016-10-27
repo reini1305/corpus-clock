@@ -1,0 +1,41 @@
+[
+{
+  "type": "heading",
+  "id": "main-heading",
+  "defaultValue": "Corpus Clock Configuration",
+  "size": 1
+},
+{
+  "type": "text",
+  "defaultValue": "If you like what I'm doing, consider a donation: <a href='https://pledgie.com/campaigns/28156'><img alt='Click here to lend your support to: Christian Reinbachers Pebble Apps and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/28156.png?skin_name=chrome' border='0' ></a>",
+  "id": "donationtext"
+},
+{
+  "type": "section",
+  "items": [
+            {
+            "type": "heading",
+            "defaultValue": "Settings"
+            },
+            {
+              "type": "slider",
+              "messageKey": "animationSec",
+              "defaultValue": 1,
+              "label": "Animation every x seconds",
+              "min": 1,
+              "max": 60,
+              "step": 1
+            },
+            {
+            "type": "toggle",
+            "messageKey": "bluetooth",
+            "label": "Vibration on bluetooth disconnect/reconnect?",
+            "defaultValue": true
+          }
+          ]
+},
+{
+  "type": "submit",
+  "defaultValue": "Save"
+}
+]

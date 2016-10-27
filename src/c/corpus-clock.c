@@ -1,4 +1,7 @@
 #include <pebble.h>
+#include "enamel.h"
+#include <pebble-connection-vibes/connection-vibes.h>
+#include <pebble-events/pebble-events.h>
 
 static Window *s_window;
 static Layer *s_background_layer;
@@ -35,7 +38,10 @@ static void handle_tick(struct tm *tick_time, TimeUnits changed) {
   s_minute_angle =  TRIG_MAX_ANGLE * tick_time->tm_min / 60;
   s_hour_angle =  (TRIG_MAX_ANGLE * (((tick_time->tm_hour % 12) * 6) + (tick_time->tm_min / 10))) / (12 * 6);
 
-  start_animation();
+  if(tick_time->tm_sec%enamel_get_animationSec() == 0)
+    start_animation();
+  else
+    layer_mark_dirty(s_background_layer);
 }
 
 static void background_update_proc(Layer *layer, GContext *ctx) {
@@ -48,8 +54,8 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
     bounds.origin.y-=offset_from_bottom;
   #endif
   const GRect second_inset = grect_inset(bounds, GEdgeInsets(10));
-  const GRect minute_inset = grect_inset(second_inset, GEdgeInsets(20));
-  const GRect hour_inset = grect_inset(minute_inset, GEdgeInsets(30));
+  const GRect minute_inset = grect_inset(second_inset, GEdgeInsets(30));
+  const GRect hour_inset = grect_inset(minute_inset, GEdgeInsets(20));
 
   GPoint pos_inner, pos_outer;
 
@@ -78,6 +84,10 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   graphics_draw_line(ctx,pos_inner,pos_outer);
 }
 
+static void enamel_settings_received_handler(void *context){
+  connection_vibes_set_state(enamel_get_bluetooth()? ConnectionVibesStateDisconnectAndReconnect : ConnectionVibesStateNone);
+}
+
 static void prv_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
@@ -98,6 +108,10 @@ static void prv_window_unload(Window *window) {
 }
 
 static void prv_init(void) {
+  connection_vibes_init();
+  enamel_init();
+  enamel_settings_received_subscribe(enamel_settings_received_handler,NULL);
+  events_app_message_open();
   s_window = window_create();
   window_set_window_handlers(s_window, (WindowHandlers) {
     .load = prv_window_load,
@@ -108,6 +122,8 @@ static void prv_init(void) {
 }
 
 static void prv_deinit(void) {
+  enamel_deinit();
+  connection_vibes_deinit();
   window_destroy(s_window);
 }
 

@@ -1,10 +1,15 @@
 {
   "name": "corpus-clock",
   "author": "Christian Reinbacher",
-  "version": "1.0.0",
-  "keywords": ["pebble-app"],
+  "version": "1.2.0",
+  "keywords": [
+    "pebble-app"
+  ],
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "enamel": "^1.2.4",
+    "pebble-connection-vibes": "^1.0.2"
+  },
   "pebble": {
     "displayName": "Corpus Clock",
     "uuid": "84b2f092-f2c2-4920-af5a-d88c40922fdd",
@@ -17,11 +22,15 @@
       "diorite",
       "emery"
     ],
+    "capabilities": [
+      "configurable"
+    ],
     "watchapp": {
       "watchface": true
     },
     "messageKeys": [
-      "dummy"
+      "animationSec",
+      "bluetooth"
     ],
     "resources": {
       "media": []
