@@ -31,7 +31,14 @@
             "messageKey": "bluetooth",
             "label": "Vibration on bluetooth disconnect/reconnect?",
             "defaultValue": true
-          }
+            },
+            {
+            "type": "toggle",
+            "messageKey": "sleep",
+            "label": "Disable vibration when asleep (requires Pebble Health enabled)?",
+            "defaultValue": true,
+            "capabilities": ["HEALTH"]
+            }
           ]
 },
 {

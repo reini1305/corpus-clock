@@ -86,6 +86,9 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
 
 static void enamel_settings_received_handler(void *context){
   connection_vibes_set_state(enamel_get_bluetooth()? ConnectionVibesStateDisconnectAndReconnect : ConnectionVibesStateNone);
+#ifdef PBL_HEALTH
+  connection_vibes_enable_health(enamel_get_sleep());
+#endif
 }
 
 static void prv_window_load(Window *window) {
@@ -112,6 +115,7 @@ static void prv_init(void) {
   enamel_init();
   enamel_settings_received_subscribe(enamel_settings_received_handler,NULL);
   events_app_message_open();
+  enamel_settings_received_handler(NULL); // update preferences
   s_window = window_create();
   window_set_window_handlers(s_window, (WindowHandlers) {
     .load = prv_window_load,
